@@ -73,12 +73,10 @@ while operating:
     if choice == "off":
         coffee = False
     elif choice == "report":
-        for k, v in resources.items():
-            if k == "profit":
-                print(f"{k.capitalize()}: ${v}")
-            else:
-                unit = "ml" if k in ("water", "milk") else "g"
-                print(f"{k.capitalize()}: {v}{unit}")
+        print(f"Water: {resources['water']}ml")
+        print(f"Milk: {resources['milk']}ml")
+        print(f"Coffee: {resources['coffee']}g")
+        print(f"Money: ${resources['profit']}")
     elif choice in ("espresso", "latte", "cappuccino"):
         if can_make_drink(choice):
             print(f"Here is your {choice}. Enjoy!")
