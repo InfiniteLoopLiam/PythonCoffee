@@ -66,8 +66,8 @@ def can_make_drink(drink):
         return False
 
 
-coffee = True
-while coffee:
+operating = True
+while operating:
 
     choice = input("What would you like? (espresso/latte/cappuccino): ")
     if choice == "off":
