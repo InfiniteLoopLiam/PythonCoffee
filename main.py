@@ -32,9 +32,8 @@ resources = {
 }
 
 
-# Function for processing coins
 def insert_coins(money):
-    global resources
+    """Processes coins, gives change and returns true if enough coins given"""
     try:
         penny = int(input("How many pennies?: ")) * 0.01
         nickel = int(input("How many nickels?: ")) * 0.05
@@ -52,18 +51,20 @@ def insert_coins(money):
         return True
     else:
         print(f"Insufficient funds. I have refunded ${total}. Have a nice day!")
+        return False
 
 
 # Function to check if there are sufficient resources
 def can_make_drink(drink):
-    global resources
-    if all(amount <= resources.get(ingredient, 0) for ingredient, amount in MENU[drink]["ingredients"].items()):
-        if insert_coins(MENU[drink]["cost"]):  # call function to process coins
-            for ingredient, amount in MENU[drink]["ingredients"].items():
-                resources[ingredient] -= amount
-    else:
-        print(f"Sorry, there are not enough resources to make this drink.")
-        return False
+    """Checks if there are enough resources and calls insert_coins function if resources are sufficient"""
+    for ingredient, amount in MENU[drink]["ingredients"].items():
+        if amount > resources.get(ingredient, 0):
+            print(f"Sorry, there is not enough {ingredient}")
+            return False
+    if insert_coins(MENU[drink]["cost"]):
+        for ingredient, amount in MENU[drink]["ingredients"].items():
+            resources[ingredient] -= amount
+        return True
 
 
 operating = True
@@ -71,7 +72,7 @@ while operating:
 
     choice = input("What would you like? (espresso/latte/cappuccino): ")
     if choice == "off":
-        coffee = False
+        operating = False
     elif choice == "report":
         print(f"Water: {resources['water']}ml")
         print(f"Milk: {resources['milk']}ml")
