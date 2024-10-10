@@ -28,10 +28,11 @@ resources = {
     "water": 300,
     "milk": 200,
     "coffee": 100,
-    "cost": 0,
+    "profit": 0,
 }
 
 
+# Function for processing coins
 def insert_coins(money):
     global resources
     try:
@@ -44,7 +45,7 @@ def insert_coins(money):
         return False
     total = round(penny + nickel + dime + quarter, 2)
     if total >= money:
-        resources["cost"] += money
+        resources["profit"] += money
         change = round(total - money, 2)
         if change > 0:
             print(f"Change: ${change}")
@@ -53,10 +54,11 @@ def insert_coins(money):
         print(f"Insufficient funds. I have refunded ${total}. Have a nice day!")
 
 
+# Function to check if there are sufficient resources
 def can_make_drink(drink):
     global resources
     if all(amount <= resources.get(ingredient, 0) for ingredient, amount in MENU[drink]["ingredients"].items()):
-        if insert_coins(MENU[drink]["cost"]):
+        if insert_coins(MENU[drink]["cost"]):  # call function to process coins
             for ingredient, amount in MENU[drink]["ingredients"].items():
                 resources[ingredient] -= amount
     else:
@@ -72,7 +74,7 @@ while coffee:
         coffee = False
     elif choice == "report":
         for k, v in resources.items():
-            if k == "cost":
+            if k == "profit":
                 print(f"{k.capitalize()}: ${v}")
             else:
                 unit = "ml" if k in ("water", "milk") else "g"
