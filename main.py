@@ -47,7 +47,7 @@ def insert_coins(money):
         resources["cost"] += money
         change = round(total - money, 2)
         if change > 0:
-            print(f"here is your change: ${change}")
+            print(f"Change: ${change}")
         return True
     else:
         print(f"Insufficient funds. I have refunded ${total}. Have a nice day!")
@@ -78,6 +78,7 @@ while coffee:
                 unit = "ml" if k in ("water", "milk") else "g"
                 print(f"{k.capitalize()}: {v}{unit}")
     elif choice in ("espresso", "latte", "cappuccino"):
-        can_make_drink(choice)
+        if can_make_drink(choice):
+            print(f"Here is your {choice}. Enjoy!")
     else:
         print("Invalid Input")
